@@ -1,5 +1,7 @@
 "use strict";
 
+const UserStorage = require("../../models/UserStorage");
+
 const output = {
     hello: (req, res) => {
         res.render("home/index");
@@ -9,16 +11,14 @@ const output = {
     },
 };
 
-const users = {
-    id: ['hee','young','nyam'],
-    pasword: ['123','1234','123344'],
-}
-
 const process = {
     login: (req, res) => {
         console.log("로그인 요청 들어옴");
         const id = req.body.id,
             pasword = req.body.pasword;
+
+        const users = UserStorage.getUsers("id","pasword");
+        console.log(users);
         
         if (users.id.includes(id)) {
             const idx = users.id.indexOf(id);
@@ -34,7 +34,6 @@ const process = {
         });
     },
 };
-
 
 module.exports = {
     output: output, 
